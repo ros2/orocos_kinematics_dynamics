@@ -48,6 +48,8 @@ if(NOT Eigen3_FOUND)
   include(${PROJ_SOURCE_DIR}/config/FindEigen3.cmake)
   set(Eigen_INCLUDE_DIR "${EIGEN3_INCLUDE_DIR}")
 endif()
+message("Eigen3 include dirs ${EIGEN3_INCLUDE_DIR}")
+
 include_directories(${Eigen_INCLUDE_DIR})
 SET(KDL_CFLAGS "${KDL_CFLAGS} -I${Eigen_INCLUDE_DIR}")
 
