@@ -43,7 +43,7 @@ ENDIF ( NOT CMAKE_BUILD_TYPE )
 SET( KDL_CFLAGS "")
 
 find_package(Eigen3)
-if(NOT Eigen_FOUND)
+if(NOT Eigen3_FOUND)
   message("Eigen3 was not found regularly")
   include(${PROJ_SOURCE_DIR}/config/FindEigen3.cmake)
   set(Eigen_INCLUDE_DIR "${EIGEN3_INCLUDE_DIR}")
