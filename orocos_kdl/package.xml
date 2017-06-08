@@ -10,9 +10,9 @@
   <license>LGPL</license>
 
   <buildtool_depend>cmake</buildtool_depend>
-  <build_depend>Eigen3</build_depend>
+  <build_depend>eigen3</build_depend>
 
-  <exec_depend>Eigen3</exec_depend>
+  <exec_depend>eigen3</exec_depend>
   <exec_depend>pkg-config</exec_depend>
 
   <test_depend>cppunit</test_depend>
