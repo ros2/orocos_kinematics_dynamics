@@ -16,7 +16,7 @@ include_directories(${orocos_kdl_INCLUDE_DIRS})
 link_directories(${orocos_kdl_LIBRARY_DIRS})
 
 SET(PYTHON_VERSION 3.5 CACHE STRING "Python Version")
-message(PYTHON_VERSION_STRING)
+message(STATUS ${PYTHON_VERSION_STRING})
 find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
 find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED)
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True, prefix=''))" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -29,9 +29,28 @@ include_directories(${SIP_INCLUDE_DIR} ${PYTHON_INCLUDE_DIRS})
 file(GLOB SIP_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.sip")
 set(SIP_INCLUDES ${SIP_FILES})
 set(SIP_EXTRA_OPTIONS "-o")
-set(PYTHON_SITE_PACKAGES_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES})
+set(PYTHON_INSTALL_DIR ${PYTHON_SITE_PACKAGES})
 add_sip_python_module(PyKDL PyKDL/PyKDL.sip ${orocos_kdl_LIBRARIES})
 
-ament_package()
+# Manually trigger adding install directory to $PYTHONPATH - until ament supports SIP packages or a better solution is found
+configure_file(
+  "cmake/pythonpath_hook.sh.in"
+  "cmake/pythonpath_hook.sh"
+  @ONLY
+)
+ament_environment_hooks(
+  ${CMAKE_CURRENT_BINARY_DIR}/cmake/pythonpath_hook.sh
+)
 
-install(FILES package.xml DESTINATION share/python_orocos_kdl)
+# python_module_PyKDL is target name created by add_sip_python_module()
+install(
+  TARGETS python_module_PyKDL
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/${PYTHON_INSTALL_DIR}"
+)
+
+install(
+	FILES package.xml
+	DESTINATION share/${PROJECT_NAME}
+)
+
+ament_package()
