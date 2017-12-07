@@ -1,0 +1,4 @@
+# copy of ament_package/template/environment_hook/pythonpath.sh.in
+# https://github.com/ament/ament_package/blob/master/ament_package/template/environment_hook/pythonpath.sh.in
+
+ament_prepend_unique_value PYTHONPATH "$AMENT_CURRENT_PREFIX/@PYTHON_INSTALL_DIR@"
