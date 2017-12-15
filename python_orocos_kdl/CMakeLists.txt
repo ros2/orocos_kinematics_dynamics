@@ -11,11 +11,13 @@ endif()
 project(python_orocos_kdl)
 
 find_package(ament_cmake REQUIRED)
-find_package(orocos_kdl)
+find_package(ament_cmake_pytest REQUIRED)
+find_package(orocos_kdl REQUIRED)
+
 include_directories(${orocos_kdl_INCLUDE_DIRS})
 link_directories(${orocos_kdl_LIBRARY_DIRS})
 
-SET(PYTHON_VERSION 3.5 CACHE STRING "Python Version")
+set(PYTHON_VERSION 3.5 CACHE STRING "Python Version")
 message(STATUS ${PYTHON_VERSION_STRING})
 find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
 find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED)
@@ -52,5 +54,20 @@ install(
 	FILES package.xml
 	DESTINATION share/${PROJECT_NAME}
 )
+
+if(BUILD_TESTING)
+  ament_add_pytest_test(
+    Frames
+    tests/framestest.py
+  )
+  ament_add_pytest_test(
+    FrameVel
+    tests/frameveltest.py
+  )
+  ament_add_pytest_test(
+    KinematicFamily
+    tests/framestest.py
+  )
+endif()
 
 ament_package()
