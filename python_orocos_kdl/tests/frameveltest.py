@@ -5,65 +5,65 @@ from math import *
 class FrameVelTestFunctions(unittest.TestCase):
 
     def testVectorVel(self):
-	v=VectorVel(Vector(3,-4,5),Vector(6,3,-5))
-	vt = Vector(-4,-6,-8);
-	self.assert_(Equal( 2*v-v,v))
-	self.assert_(Equal( v*2-v,v))
-	self.assert_(Equal( v+v+v-2*v,v))
-	v2=VectorVel(v)
-	self.assert_(Equal( v,v2))
-	v2+=v
-	self.assert_(Equal( 2*v,v2))
-	v2-=v
-	self.assert_(Equal( v,v2))
-	v2.ReverseSign()
-	self.assert_(Equal( v,-v2))
-	self.assert_(Equal( v*vt,-vt*v))
-	v2 = VectorVel(Vector(-5,-6,-3),Vector(3,4,5))
-	self.assert_(Equal( v*v2,-v2*v))
+        v=VectorVel(Vector(3,-4,5),Vector(6,3,-5))
+        vt = Vector(-4,-6,-8);
+        self.assert_(Equal( 2*v-v,v))
+        self.assert_(Equal( v*2-v,v))
+        self.assert_(Equal( v+v+v-2*v,v))
+        v2=VectorVel(v)
+        self.assert_(Equal( v,v2))
+        v2+=v
+        self.assert_(Equal( 2*v,v2))
+        v2-=v
+        self.assert_(Equal( v,v2))
+        v2.ReverseSign()
+        self.assert_(Equal( v,-v2))
+        self.assert_(Equal( v*vt,-vt*v))
+        v2 = VectorVel(Vector(-5,-6,-3),Vector(3,4,5))
+        self.assert_(Equal( v*v2,-v2*v))
 
-       
+
     def testRotationVel(self):
         v=VectorVel(Vector(9,4,-2),Vector(-5,6,-2))
-	vt=Vector(2,3,4)
-	a= radians(-15)
-	b= radians(20)
-	c= radians(-80)
-	R = RotationVel(Rotation.RPY(a,b,c),Vector(2,4,1))
-	R2=RotationVel(R)	
-	self.assert_(Equal(R,R2))
-	self.assert_(Equal((R*v).Norm(),(v.Norm())))
-	self.assert_(Equal(R.Inverse(R*v),v))
-	self.assert_(Equal(R*R.Inverse(v),v))
-	self.assert_(Equal(R*Rotation.Identity(),R))
-	self.assert_(Equal(Rotation.Identity()*R,R))
-	self.assert_(Equal(R*(R*(R*v)),(R*R*R)*v))
-	self.assert_(Equal(R*(R*(R*vt)),(R*R*R)*vt))
-	self.assert_(Equal(R*R.Inverse(),RotationVel.Identity()))
-	self.assert_(Equal(R.Inverse()*R,RotationVel.Identity()))
-	self.assert_(Equal(R.Inverse()*v,R.Inverse(v)))
-	#v2=v*v-2*v
+        vt=Vector(2,3,4)
+        a= radians(-15)
+        b= radians(20)
+        c= radians(-80)
+        R = RotationVel(Rotation.RPY(a,b,c),Vector(2,4,1))
+        R2=RotationVel(R)
+        self.assert_(Equal(R,R2))
+        self.assert_(Equal((R*v).Norm(),(v.Norm())))
+        self.assert_(Equal(R.Inverse(R*v),v))
+        self.assert_(Equal(R*R.Inverse(v),v))
+        self.assert_(Equal(R*Rotation.Identity(),R))
+        self.assert_(Equal(Rotation.Identity()*R,R))
+        self.assert_(Equal(R*(R*(R*v)),(R*R*R)*v))
+        self.assert_(Equal(R*(R*(R*vt)),(R*R*R)*vt))
+        self.assert_(Equal(R*R.Inverse(),RotationVel.Identity()))
+        self.assert_(Equal(R.Inverse()*R,RotationVel.Identity()))
+        self.assert_(Equal(R.Inverse()*v,R.Inverse(v)))
+        #v2=v*v-2*v
         #print dot(v2,v2)
-	#self.assert_(Equal((v2).Norm(),sqrt(dot(v2,v2))))
+        #self.assert_(Equal((v2).Norm(),sqrt(dot(v2,v2))))
 
     def testFrameVel(self):
-	v=VectorVel(Vector(3,4,5),Vector(-2,-4,-1))
-	vt=Vector(-1,0,-10)
-	F = FrameVel(Frame(Rotation.EulerZYX(radians(10),radians(20),radians(-10)),Vector(4,-2,1)),
-                     Twist(Vector(2,-2,-2),Vector(-5,-3,-2)))					
-	F2=FrameVel(F)
-	self.assert_(Equal( F,F2))
-	self.assert_(Equal( F.Inverse(F*v),v))
-	self.assert_(Equal( F.Inverse(F*vt), vt))
-	self.assert_(Equal( F*F.Inverse(v),v))
-	self.assert_(Equal( F*F.Inverse(vt),vt))
-	self.assert_(Equal( F*Frame.Identity(),F))
-	self.assert_(Equal( Frame.Identity()*F,F))
-	self.assert_(Equal( F*(F*(F*v)),(F*F*F)*v))
-	self.assert_(Equal( F*(F*(F*vt)),(F*F*F)*vt))
-	self.assert_(Equal( F*F.Inverse(),FrameVel.Identity()))
-	self.assert_(Equal( F.Inverse()*F,Frame.Identity()))
-	self.assert_(Equal( F.Inverse()*vt,F.Inverse(vt)))
+        v=VectorVel(Vector(3,4,5),Vector(-2,-4,-1))
+        vt=Vector(-1,0,-10)
+        F = FrameVel(Frame(Rotation.EulerZYX(radians(10),radians(20),radians(-10)),Vector(4,-2,1)),
+                     Twist(Vector(2,-2,-2),Vector(-5,-3,-2)))
+        F2=FrameVel(F)
+        self.assert_(Equal( F,F2))
+        self.assert_(Equal( F.Inverse(F*v),v))
+        self.assert_(Equal( F.Inverse(F*vt), vt))
+        self.assert_(Equal( F*F.Inverse(v),v))
+        self.assert_(Equal( F*F.Inverse(vt),vt))
+        self.assert_(Equal( F*Frame.Identity(),F))
+        self.assert_(Equal( Frame.Identity()*F,F))
+        self.assert_(Equal( F*(F*(F*v)),(F*F*F)*v))
+        self.assert_(Equal( F*(F*(F*vt)),(F*F*F)*vt))
+        self.assert_(Equal( F*F.Inverse(),FrameVel.Identity()))
+        self.assert_(Equal( F.Inverse()*F,Frame.Identity()))
+        self.assert_(Equal( F.Inverse()*vt,F.Inverse(vt)))
 
 
     def testPickle(self):
@@ -74,15 +74,15 @@ class FrameVelTestFunctions(unittest.TestCase):
         data['rv'] = RotationVel(rot, Vector(4.1,5.1,6.1))
         data['fv'] = FrameVel(data['rv'], data['vv'])
         data['tv'] = TwistVel(data['vv'], data['vv'])
-        
-        f = open('/tmp/pickle_test_kdl_framevel', 'w')
+
+        f = open('/tmp/pickle_test_kdl_framevel', 'wb')
         pickle.dump(data, f)
         f.close()
-        
-        f = open('/tmp/pickle_test_kdl_framevel', 'r')
+
+        f = open('/tmp/pickle_test_kdl_framevel', 'rb')
         data1 = pickle.load(f)
         f.close()
-       
+
         self.assertEqual(data['vv'].p, data1['vv'].p)
         self.assertEqual(data['vv'].v, data1['vv'].v)
         self.assertEqual(data['rv'].R, data1['rv'].R)
@@ -151,7 +151,7 @@ class FrameVelTestFunctions(unittest.TestCase):
 #	TwistAcc     t( VectorAcc(Vector(6,3,5),Vector(1,4,2),Vector(5,2,1)),
 #		              VectorAcc(Vector(4,-2,7),Vector(-1,-2,-3),Vector(5,2,9) )
 #					);
-#	TwistAcc    t2; 
+#	TwistAcc    t2;
 #	RotationAcc  R(Rotation::RPY(10*deg2rad,20*deg2rad,-15*deg2rad),
 #		             Vector(-1,5,3),
 #					 Vector(2,1,3)
@@ -160,12 +160,12 @@ class FrameVelTestFunctions(unittest.TestCase):
 #			Frame(Rotation::EulerZYX(-17*deg2rad,13*deg2rad,-16*deg2rad),Vector(4,-2,1)),
 #			Twist(Vector(2,-2,-2),Vector(-5,-3,-2)),
 #			Twist(Vector(5,4,-5),Vector(12,13,17))
-#		    );	
+#		    );
 #
 #	KDL_DIFF(2.0*t-t,t);
 #	KDL_DIFF(t*2.0-t,t);
 #	KDL_DIFF(t+t+t-2.0*t,t);
-#	t2=t; 
+#	t2=t;
 #	KDL_DIFF(t,t2);
 #	t2+=t;
 #	KDL_DIFF(2.0*t,t2);
