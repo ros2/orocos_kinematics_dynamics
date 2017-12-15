@@ -60,14 +60,17 @@ if(BUILD_TESTING)
   ament_add_pytest_test(
     Frames
     tests/framestest.py
+    APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
   )
   ament_add_pytest_test(
     FrameVel
     tests/frameveltest.py
+    APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
   )
   ament_add_pytest_test(
     KinematicFamily
     tests/framestest.py
+    APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}
   )
 endif()
 
