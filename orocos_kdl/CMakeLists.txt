@@ -93,13 +93,18 @@ ENDIF(ENABLE_TESTS )
 
 # Disable Windows Compiler warnings
 # see https://msdn.microsoft.com/en-us/library/thxezb7y.aspx
-IF(WIN32)
+IF(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   add_definitions(
     "/W3"
     "/wd4244"
     "/wd4267"
     "/wd4800"
     "/wd4996")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  # https://github.com/orocos/orocos_kinematics_dynamics/issues/104
+  add_definitions(
+    "-Wno-deprecated-declarations"
+  )
 endif()
 
 OPTION(ENABLE_EXAMPLES OFF "Enable building of examples")
