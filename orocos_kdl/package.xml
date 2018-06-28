@@ -6,8 +6,8 @@
     Library (KDL), distributed by the Orocos Project. 
   </description>
   <maintainer email="mikael@osrfoundation.org">Mikael Arguedas</maintainer>
-  <url>http://wiki.ros.org/orocos_kdl</url>
   <license>LGPL</license>
+  <url>http://wiki.ros.org/orocos_kdl</url>
   <author>Ruben Smits</author>
 
   <buildtool_depend>cmake</buildtool_depend>
