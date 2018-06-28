@@ -5,9 +5,10 @@
     This package contains a recent version of the Kinematics and Dynamics
     Library (KDL), distributed by the Orocos Project. 
   </description>
-  <maintainer email="ruben@intermodalics.eu">Ruben Smits</maintainer>
+  <maintainer email="mikael@osrfoundation.org">Mikael Arguedas</maintainer>
   <url>http://wiki.ros.org/orocos_kdl</url>
   <license>LGPL</license>
+  <author>Ruben Smits</author>
 
   <buildtool_depend>cmake</buildtool_depend>
   <build_depend>eigen</build_depend>
