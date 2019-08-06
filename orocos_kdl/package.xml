@@ -11,9 +11,14 @@
   <author>Ruben Smits</author>
 
   <buildtool_depend>cmake</buildtool_depend>
+  <buildtool_depend>eigen3_cmake_module</buildtool_depend>
+
+  <buildtool_export_depend>eigen3_cmake_module</buildtool_export_depend>
+
   <build_depend>eigen</build_depend>
 
-  <exec_depend>eigen</exec_depend>
+  <build_export_depend>eigen</build_export_depend>
+
   <exec_depend>pkg-config</exec_depend>
 
   <test_depend>cppunit</test_depend>
