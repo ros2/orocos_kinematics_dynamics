@@ -12,6 +12,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 ###################################################
 
 PROJECT(orocos_kdl)
+set(CMAKE_CXX_STANDARD 11)
 
 SET( KDL_VERSION 1.4.0)
 STRING( REGEX MATCHALL "[0-9]+" KDL_VERSIONS ${KDL_VERSION} )
