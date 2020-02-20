@@ -2,6 +2,9 @@
 # Test CMake version
 #
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+IF(POLICY CMP0048)
+  CMAKE_POLICY(SET CMP0048 NEW)
+ENDIF()
 #MARK_AS_ADVANCED( FORCE CMAKE_BACKWARDS_COMPATIBILITY )
 
 
@@ -127,8 +130,8 @@ CONFIGURE_FILE(KDLConfig.cmake.in
 CONFIGURE_FILE(KDLConfigVersion.cmake.in
   ${PROJECT_BINARY_DIR}/orocos_kdl-config-version.cmake @ONLY)
 
-INSTALL(FILES ${PROJECT_BINARY_DIR}/orocos_kdl-config.cmake DESTINATION share/orocos_kdl)
-INSTALL(FILES ${PROJECT_BINARY_DIR}/orocos_kdl-config-version.cmake DESTINATION share/orocos_kdl)
-INSTALL(EXPORT OrocosKDLTargets DESTINATION share/orocos_kdl)
+INSTALL(FILES ${PROJECT_BINARY_DIR}/orocos_kdl-config.cmake DESTINATION share/orocos_kdl/cmake)
+INSTALL(FILES ${PROJECT_BINARY_DIR}/orocos_kdl-config-version.cmake DESTINATION share/orocos_kdl/cmake)
+INSTALL(EXPORT OrocosKDLTargets DESTINATION share/orocos_kdl/cmake)
 
 INSTALL(FILES package.xml DESTINATION share/orocos_kdl)

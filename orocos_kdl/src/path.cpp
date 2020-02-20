@@ -43,6 +43,7 @@
 
 #include "utilities/error.h"
 #include "utilities/error_stack.h"
+#include "utilities/scoped_ptr.hpp"
 #include "path.hpp"
 #include "path_line.hpp"
 #include "path_point.hpp"

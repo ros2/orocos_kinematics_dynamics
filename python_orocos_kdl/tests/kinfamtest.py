@@ -26,7 +26,7 @@ from math import *
 import random
 
 class KinfamTestFunctions(unittest.TestCase):
-    
+
     def setUp(self):
         self.chain = Chain()
         self.chain.addSegment(Segment(Joint(Joint.RotZ),
@@ -63,18 +63,18 @@ class KinfamTestFunctions(unittest.TestCase):
 
         q=JntArray(self.chain.getNrOfJoints())
         jac=Jacobian(self.chain.getNrOfJoints())
-        
+
         for i in range(q.rows()):
             q[i]=random.uniform(-3.14,3.14)
 
         self.jacsolver.JntToJac(q,jac)
-        
+
         for i in range(q.rows()):
             oldqi=q[i];
             q[i]=oldqi+deltaq
-            self.assert_(0==self.fksolverpos.JntToCart(q,F2))
+            self.assertTrue(0==self.fksolverpos.JntToCart(q,F2))
             q[i]=oldqi-deltaq
-            self.assert_(0==self.fksolverpos.JntToCart(q,F1))
+            self.assertTrue(0==self.fksolverpos.JntToCart(q,F1))
             q[i]=oldqi
             Jcol1 = diff(F1,F2,2*deltaq)
             Jcol2 = Twist(Vector(jac[0,i],jac[1,i],jac[2,i]),
@@ -84,7 +84,7 @@ class KinfamTestFunctions(unittest.TestCase):
     def testFkVelAndJac(self):
         deltaq = 1E-4
         epsJ   = 1E-4
-    
+
         q=JntArray(self.chain.getNrOfJoints())
         qdot=JntArray(self.chain.getNrOfJoints())
         for i in range(q.rows()):
@@ -98,7 +98,7 @@ class KinfamTestFunctions(unittest.TestCase):
         t = Twist.Zero();
 
         self.jacsolver.JntToJac(qvel.q,jac)
-        self.assert_(self.fksolvervel.JntToCart(qvel,cart)==0)
+        self.assertTrue(self.fksolvervel.JntToCart(qvel,cart)==0)
         MultiplyJacobian(jac,qvel.qdot,t)
         self.assertEqual(cart.deriv(),t)
 
@@ -113,37 +113,36 @@ class KinfamTestFunctions(unittest.TestCase):
 
         qvel=JntArrayVel(q,qdot)
         qdot_solved=JntArray(self.chain.getNrOfJoints())
-        
+
         cart = FrameVel()
-        
-        self.assert_(0==self.fksolvervel.JntToCart(qvel,cart))
-        self.assert_(0==self.iksolvervel.CartToJnt(qvel.q,cart.deriv(),qdot_solved))
-        
+
+        self.assertTrue(0==self.fksolvervel.JntToCart(qvel,cart))
+        self.assertTrue(0==self.iksolvervel.CartToJnt(qvel.q,cart.deriv(),qdot_solved))
+
         self.assertEqual(qvel.qdot,qdot_solved);
-        
 
     def testFkPosAndIkPos(self):
         q=JntArray(self.chain.getNrOfJoints())
         for i in range(q.rows()):
             q[i]=random.uniform(-3.14,3.14)
-        
+
         q_init=JntArray(self.chain.getNrOfJoints())
         for i in range(q_init.rows()):
             q_init[i]=q[i]+0.1*random.random()
-            
+
         q_solved=JntArray(q.rows())
 
         F1=Frame.Identity()
         F2=Frame.Identity()
-    
-        self.assert_(0==self.fksolverpos.JntToCart(q,F1))
-        self.assert_(0==self.iksolverpos.CartToJnt(q_init,F1,q_solved))
-        self.assert_(0==self.fksolverpos.JntToCart(q_solved,F2))
-        
+
+        self.assertTrue(0==self.fksolverpos.JntToCart(q,F1))
+        self.assertTrue(0==self.iksolverpos.CartToJnt(q_init,F1,q_solved))
+        self.assertTrue(0==self.fksolverpos.JntToCart(q_solved,F2))
+
         self.assertEqual(F1,F2)
         self.assertEqual(q,q_solved)
-        
-        
+
+
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(KinfamTestFunctions('testFkPosAndJac'))
@@ -152,6 +151,7 @@ def suite():
     suite.addTest(KinfamTestFunctions('testFkPosAndIkPos'))
     return suite
 
-#suite = suite()
-#unittest.TextTestRunner(verbosity=3).run(suite)
-            
+
+if __name__ == '__main__':
+    suite = suite()
+    unittest.TextTestRunner(verbosity=3).run(suite)
