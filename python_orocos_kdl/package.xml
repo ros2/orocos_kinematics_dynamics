@@ -18,6 +18,8 @@
   <exec_depend>orocos_kdl</exec_depend>
   <exec_depend>python-sip</exec_depend>
 
+  <test_depend>python-psutil</test_depend>
+
   <export>
     <build_type>cmake</build_type>
   </export>
