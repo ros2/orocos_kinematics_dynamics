@@ -5,10 +5,11 @@
     This package contains a recent version of the Kinematics and Dynamics
     Library (KDL), distributed by the Orocos Project. 
   </description>
-  <maintainer email="steven@openrobotics.org">Steven! Ragnarök</maintainer>
+  <maintainer email="jacob@openrobotics.org">Jacob Perron</maintainer>
   <license>LGPL</license>
   <url>http://wiki.ros.org/orocos_kdl</url>
   <author>Ruben Smits</author>
+  <author email="steven@openrobotics.org">Steven! Ragnarök</author>
 
   <buildtool_depend>cmake</buildtool_depend>
   <buildtool_depend>eigen3_cmake_module</buildtool_depend>
