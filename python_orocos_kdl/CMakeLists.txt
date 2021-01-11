@@ -1,9 +1,19 @@
-cmake_minimum_required(VERSION 2.4.6)
-if(POLICY CMP0048)
-  cmake_policy(SET CMP0048 NEW)
+cmake_minimum_required(VERSION 3.5)
+project(python_orocos_kdl)
+
+# Default to C99
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 99)
 endif()
 
-project(python_orocos_kdl)
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
 find_package(orocos_kdl)
 include_directories(${orocos_kdl_INCLUDE_DIRS})
@@ -31,7 +41,13 @@ add_sip_python_module(PyKDL PyKDL/PyKDL.sip ${orocos_kdl_LIBRARIES})
 
 install(FILES package.xml DESTINATION share/python_orocos_kdl)
 
-find_package(catkin QUIET)
-if(catkin_FOUND)
-  catkin_add_env_hooks(python_orocos_kdl_site_packages SHELLS bash tcsh zsh DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
+find_package(ament_cmake QUIET)
+if(ament_cmake_FOUND)
+  ament_environment_hooks(
+    env-hooks/python_orocos_kdl_site_packages.bash.in
+    env-hooks/python_orocos_kdl_site_packages.tcsh.in
+    env-hooks/python_orocos_kdl_site_packages.sh.in
+    env-hooks/python_orocos_kdl_site_packages.zsh.in
+  )
+  ament_package()
 endif()
