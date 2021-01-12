@@ -43,11 +43,10 @@ install(FILES package.xml DESTINATION share/python_orocos_kdl)
 
 find_package(ament_cmake QUIET)
 if(ament_cmake_FOUND)
-  ament_environment_hooks(
-    env-hooks/python_orocos_kdl_site_packages.bash.in
-    env-hooks/python_orocos_kdl_site_packages.tcsh.in
-    env-hooks/python_orocos_kdl_site_packages.sh.in
-    env-hooks/python_orocos_kdl_site_packages.zsh.in
-  )
+  ament_environment_hooks(env-hooks/python_orocos_kdl_site_packages.bash.in)
+  ament_environment_hooks(env-hooks/python_orocos_kdl_site_packages.tcsh.in)
+  ament_environment_hooks(env-hooks/python_orocos_kdl_site_packages.sh.in)
+  ament_environment_hooks(env-hooks/python_orocos_kdl_site_packages.zsh.in)
+  ament_environment_hooks(env-hooks/python_orocos_kdl_site_packages.dsv.in)
   ament_package()
 endif()

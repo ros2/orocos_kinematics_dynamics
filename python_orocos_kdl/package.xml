@@ -13,7 +13,7 @@
   <author>Ruben Smits</author>
   <author email="steven@openrobotics.org">Steven! Ragnarök</author>
 
-  <buildtool_depend>cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
   <build_depend>orocos_kdl</build_depend>
   <build_depend>python-sip</build_depend>
@@ -24,7 +24,7 @@
   <test_depend>python-psutil</test_depend>
 
   <export>
-    <build_type>cmake</build_type>
+    <build_type>ament_cmake</build_type>
   </export>
 
 </package>

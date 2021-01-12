@@ -1,1 +1,1 @@
-export PYTHONPATH=@PYTHON_SITE_PACKAGES_INSTALL_DIR@:$PYTHONPATH
+ament_prepend_unique_value PYTHONPATH "$AMENT_CURRENT_PREFIX/lib/python3/dist-packages"
