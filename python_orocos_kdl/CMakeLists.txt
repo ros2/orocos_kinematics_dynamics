@@ -42,10 +42,11 @@ add_sip_python_module(PyKDL PyKDL/PyKDL.sip ${orocos_kdl_LIBRARIES})
 if(BUILD_TESTING)
   find_package(ament_cmake_pytest REQUIRED)
   ament_add_pytest_test(frames_test tests/framestest.py PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}" APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR} TIMEOUT 60)
+  ament_add_pytest_test(frame_vel_test tests/frameveltest.py PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}" APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR} TIMEOUT 60)
+  ament_add_pytest_test(kinfam_test tests/kinfamtest.py PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}" APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR} TIMEOUT 60)
 endif()
 
 set(PYTHON_EXECUTABLE "${_PYTHON_EXECUTABLE}")
-
 
 install(FILES package.xml DESTINATION share/python_orocos_kdl)
 
