@@ -19,13 +19,13 @@ find_package(orocos_kdl)
 include_directories(${orocos_kdl_INCLUDE_DIRS})
 link_directories(${orocos_kdl_LIBRARY_DIRS})
 
-if(DEFINED ENV{ROS_PYTHON_VERSION})
-  SET(PYTHON_VERSION $ENV{ROS_PYTHON_VERSION} CACHE STRING "Python Version")
-else()
-  SET(PYTHON_VERSION 2 CACHE STRING "Python Version")
+find_package(python_cmake_module REQUIRED)
+find_package(PythonExtra REQUIRED)
+set(_PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}")
+if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+  set(PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE_DEBUG}")
 endif()
-find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
-find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED)
+
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True, prefix=''))" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 find_package(SIP REQUIRED)
@@ -38,6 +38,14 @@ set(SIP_INCLUDES ${SIP_FILES})
 set(SIP_EXTRA_OPTIONS "-o")
 set(PYTHON_SITE_PACKAGES_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES})
 add_sip_python_module(PyKDL PyKDL/PyKDL.sip ${orocos_kdl_LIBRARIES})
+
+if(BUILD_TESTING)
+  find_package(ament_cmake_pytest REQUIRED)
+  ament_add_pytest_test(frames_test tests/framestest.py PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}" APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR} TIMEOUT 60)
+endif()
+
+set(PYTHON_EXECUTABLE "${_PYTHON_EXECUTABLE}")
+
 
 install(FILES package.xml DESTINATION share/python_orocos_kdl)
 
