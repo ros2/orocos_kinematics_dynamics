@@ -144,7 +144,13 @@ class KinfamTestFunctions(unittest.TestCase):
         self.assertTrue(0==self.fksolverpos.JntToCart(q_solved,F2))
 
         self.assertEqual(F1,F2)
-        self.assertEqual(q,q_solved)
+
+        tol = 1e-3
+        norm = 0.0
+        for i in range(q.rows()):
+            norm += (q[i] - q_solved[i]) ** 2
+        norm = sqrt(norm)
+        self.assertTrue(norm < tol)
 
 
 class KinfamTestTree(unittest.TestCase):
