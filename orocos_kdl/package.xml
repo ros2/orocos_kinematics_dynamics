@@ -3,10 +3,10 @@
   <version>3.3.3</version>
   <description>
     This package contains a recent version of the Kinematics and Dynamics
-    Library (KDL), distributed by the Orocos Project. 
+    Library (KDL), distributed by the Orocos Project.
   </description>
   <maintainer email="jacob@openrobotics.org">Jacob Perron</maintainer>
-  <license>LGPL</license>
+  <license>LGPL-2.1-or-later</license>
   <url>http://wiki.ros.org/orocos_kdl</url>
   <author>Ruben Smits</author>
   <author email="steven@openrobotics.org">Steven! Ragnarök</author>
