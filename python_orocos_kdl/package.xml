@@ -6,7 +6,7 @@
     Library (KDL), distributed by the Orocos Project.
   </description>
   <maintainer email="jacob@openrobotics.org">Jacob Perron</maintainer>
-  <license>LGPL</license>
+  <license>LGPL-2.1-or-later</license>
   <url>http://wiki.ros.org/python_orocos_kdl</url>
   <author>Ruben Smits</author>
   <author email="steven@openrobotics.org">Steven! Ragnarök</author>
