@@ -37,11 +37,11 @@ class KinfamTestFunctions(unittest.TestCase):
                                  Frame(Vector(0.0,0.0,0.0))))
         self.chain.addSegment(Segment(Joint(Joint.RotX),
                                  Frame(Vector(0.0,0.0,0.9))))
-        self.chain.addSegment(Segment(Joint(Joint.None),
+        self.chain.addSegment(Segment(Joint(getattr(Joint,"None")),
                                  Frame(Vector(-0.4,0.0,0.0))))
         self.chain.addSegment(Segment(Joint(Joint.RotY),
                              Frame(Vector(0.0,0.0,1.2))))
-        self.chain.addSegment(Segment(Joint(Joint.None),
+        self.chain.addSegment(Segment(Joint(getattr(Joint,"None")),
                                  Frame(Vector(0.4,0.0,0.0))))
         self.chain.addSegment(Segment(Joint(Joint.TransZ),
                                  Frame(Vector(0.0,0.0,1.4))))
@@ -49,7 +49,7 @@ class KinfamTestFunctions(unittest.TestCase):
                                  Frame(Vector(0.0,0.0,0.0))))
         self.chain.addSegment(Segment(Joint(Joint.TransY),
                                  Frame(Vector(0.0,0.0,0.4))))
-        self.chain.addSegment(Segment(Joint(Joint.None),
+        self.chain.addSegment(Segment(Joint(getattr(Joint,"None")),
                                  Frame(Vector(0.0,0.0,0.0))))
 
         self.jacsolver   = ChainJntToJacSolver(self.chain)
@@ -144,7 +144,13 @@ class KinfamTestFunctions(unittest.TestCase):
         self.assertTrue(0==self.fksolverpos.JntToCart(q_solved,F2))
 
         self.assertEqual(F1,F2)
-        self.assertEqual(q,q_solved)
+
+        tol = 1e-3
+        norm = 0.0
+        for i in range(q.rows()):
+            norm += (q[i] - q_solved[i]) ** 2
+        norm = sqrt(norm)
+        self.assertTrue(norm < tol)
 
 
 class KinfamTestTree(unittest.TestCase):
@@ -153,7 +159,7 @@ class KinfamTestTree(unittest.TestCase):
         self.tree = Tree()
         self.tree.addSegment(Segment(Joint(Joint.RotZ),
                                      Frame(Vector(0.0, 0.0, 0.0))), "foo")
-        self.tree.addSegment(Segment(Joint(Joint.None),
+        self.tree.addSegment(Segment(Joint(getattr(Joint,"None")),
                                      Frame(Vector(0.0, 0.0, 0.0))), "bar")
 
     def testTreeGetChainMemLeak(self):
@@ -164,7 +170,7 @@ class KinfamTestTree(unittest.TestCase):
         mem_before = process.memory_info().vms
         # needs at least 2000 iterations on my system to cause a detectable
         # difference in memory usage
-        for _ in xrange(10000):
+        for _ in range(10000):
             self.tree.getChain("foo", "bar")
         gc.collect()
         mem_after = process.memory_info().vms

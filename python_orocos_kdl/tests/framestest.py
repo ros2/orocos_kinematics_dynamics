@@ -26,7 +26,7 @@ from math import *
 
 class FramesTestFunctions(unittest.TestCase):
 
-    def testVector2(self,v):
+    def helperVector(self,v):
         self.assertEqual(2*v-v,v)
         self.assertEqual(v*2-v,v)
         self.assertEqual(v+v+v-2*v,v)
@@ -41,11 +41,11 @@ class FramesTestFunctions(unittest.TestCase):
 
     def testVector(self):
         v=Vector(3,4,5)
-        self.testVector2(v)
+        self.helperVector(v)
         v=Vector.Zero()
-        self.testVector2(v)
+        self.helperVector(v)
 
-    def testTwist2(self,t):
+    def helperTwist(self,t):
         self.assertEqual(2*t-t,t)
         self.assertEqual(t*2-t,t)
         self.assertEqual(t+t+t-2*t,t)
@@ -60,12 +60,13 @@ class FramesTestFunctions(unittest.TestCase):
 
     def testTwist(self):
         t=Twist(Vector(6,3,5),Vector(4,-2,7))
-        self.testTwist2(t)
+        self.helperTwist(t)
         t=Twist.Zero()
-        self.testTwist2(t)
+        self.helperTwist(t)
         t=Twist(Vector(0,-9,-3),Vector(1,-2,-4))
+        self.helperTwist(t)
 
-    def testWrench2(self,w):
+    def helperWrench(self,w):
         self.assertEqual(2*w-w,w)
         self.assertEqual(w*2-w,w)
         self.assertEqual(w+w+w-2*w,w)
@@ -80,23 +81,23 @@ class FramesTestFunctions(unittest.TestCase):
 
     def testWrench(self):
         w=Wrench(Vector(7,-1,3),Vector(2,-3,3))
-        self.testWrench2(w)
+        self.helperWrench(w)
         w=Wrench.Zero()
-        self.testWrench2(w)
+        self.helperWrench(w)
         w=Wrench(Vector(2,1,4),Vector(5,3,1))
-        self.testWrench2(w)
+        self.helperWrench(w)
 
-    def testRotation2(self,v,a,b,c):
+    def helperRotation(self,v,a,b,c):
         w=Wrench(Vector(7,-1,3),Vector(2,-3,3))
         t=Twist(Vector(6,3,5),Vector(4,-2,7))
         R=Rotation.RPY(a,b,c)
 
         self.assertAlmostEqual(dot(R.UnitX(),R.UnitX()),1.0,15)
-        self.assertEqual(dot(R.UnitY(),R.UnitY()),1.0)
-        self.assertEqual(dot(R.UnitZ(),R.UnitZ()),1.0)
+        self.assertAlmostEqual(dot(R.UnitY(),R.UnitY()),1.0,15)
+        self.assertAlmostEqual(dot(R.UnitZ(),R.UnitZ()),1.0,15)
         self.assertAlmostEqual(dot(R.UnitX(),R.UnitY()),0.0,15)
         self.assertAlmostEqual(dot(R.UnitX(),R.UnitZ()),0.0,15)
-        self.assertEqual(dot(R.UnitY(),R.UnitZ()),0.0)
+        self.assertAlmostEqual(dot(R.UnitY(),R.UnitZ()),0.0,15)
         R2=Rotation(R)
         self.assertEqual(R,R2)
         self.assertAlmostEqual((R*v).Norm(),v.Norm(),14)
@@ -135,7 +136,7 @@ class FramesTestFunctions(unittest.TestCase):
         self.assertAlmostEqual(v2.Norm(),sqrt(dot(v2,v2)),14)
 
     def testRotation(self):
-        self.testRotation2(Vector(3,4,5),radians(10),radians(20),radians(30))
+        self.helperRotation(Vector(3,4,5),radians(10),radians(20),radians(30))
 
     def testFrame(self):
         v=Vector(3,4,5)
@@ -168,11 +169,11 @@ class FramesTestFunctions(unittest.TestCase):
         data['tw'] = Twist(data['v'], Vector(4,5,6))
         data['wr'] = Wrench(Vector(0.1,0.2,0.3), data['v'])
 
-        f = open('/tmp/pickle_test', 'w')
+        f = open('/tmp/pickle_test', 'wb')
         pickle.dump(data, f)
         f.close()
 
-        f = open('/tmp/pickle_test', 'r')
+        f = open('/tmp/pickle_test', 'rb')
         data1 = pickle.load(f)
         f.close()
 
